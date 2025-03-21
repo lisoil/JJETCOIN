@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJETTCOIN - User Information</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .nav-bar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-bar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-bar a.active {
+            background-color: #007BFF;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .main-content {
+            margin-top: 80px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 10px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .section h2 {
+            color: #fff;
+            margin-top: 0;
+            font-size: 20px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #user-tracker {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        #user-tracker p {
+            margin: 5px 0;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        #user-tracker span {
+            font-weight: 600;
+            color: #007BFF;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        .stat-card p {
+            margin: 10px 0 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="games.html">Games</a>
+        <a href="user-info.html" class="active">User Info</a>
+    </div>
+
+    <div id="user-tracker">
+        <p>Username: <span id="current-username">NA</span></p>
+        <p>Current USD: <span id="current-usd">0.00</span></p>
+        <p>Current JJETTCOIN: <span id="current-JJETTCOIN">0.00</span></p>
+    </div>
+
+    <div class="main-content">
+        <h1>User Information</h1>
+
+        <div class="section">
+            <h2>Performance Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Winnings</h3>
+                    <p id="total-winnings">$75.00</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Losses</h3>
+                    <p id="total-losses">$35.00</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Net Profit</h3>
+                    <p id="net-profit">$40.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Winnings and Losses History</h2>
+            <div class="chart-container">
+                <canvas id="winnings-losses-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update user tracker display
+        function updateUserTracker() {
+            const currentUser = sessionStorage.getItem('currentUser');
+            if (currentUser) {
+                const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+                const user = userData[currentUser] || { balance: 0, JJETTCOIN: 0 };
+                
+                document.getElementById('current-username').innerText = currentUser;
+                document.getElementById('current-usd').innerText = user.balance.toFixed(2);
+                document.getElementById('current-JJETTCOIN').innerText = user.JJETTCOIN.toFixed(2);
+            } else {
+                document.getElementById('current-username').innerText = 'NA';
+                document.getElementById('current-usd').innerText = '0.00';
+                document.getElementById('current-JJETTCOIN').innerText = '0.00';
+            }
+        }
+
+        // Chart.js for winnings and losses
+        const ctxWinnings = document.getElementById('winnings-losses-chart').getContext('2d');
+        const chart = new Chart(ctxWinnings, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Winnings',
+                    data: [10, 20, 15, 30],
+                    borderColor: 'green',
+                    fill: false,
+                    tension: 0.4
+                }, {
+                    label: 'Losses',
+                    data: [5, 10, 8, 12],
+                    borderColor: 'red',
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#fff'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Update tracker when page loads
+        updateUserTracker();
+    </script>
+</body>
+</html> 
