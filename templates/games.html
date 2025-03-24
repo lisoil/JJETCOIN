@@ -174,9 +174,9 @@
 </head>
 <body>
     <div class="nav-bar">
-        <a href="index.html">Home</a>
-        <a href="games.html" class="active">Games</a>
-        <a href="user-info.html">User Info</a>
+        <a href="{{ url_for('index')}}">Home</a>
+        <a href="{{ url_for('games')}}">Games</a>
+        <a href="{{ url_for('userinfo')}}">User Info</a>
     </div>
 
     <div id="user-tracker">

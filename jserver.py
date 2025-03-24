@@ -9,18 +9,21 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/user-info')
-def get_user_info():
-    return render_template('user-info.html')
+@app.route('/userinfo')
+def userinfo():
+    return render_template('userinfo.html')
 
-@app.route('/games')
-def get_games():
+@app.route('/games/')
+def games():
     return render_template('games.html')
 
 @app.route('/stonks')
-def get_stonks():
+def stonks():
     return render_template('stonks.html')
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == "__main__":
     serve(app, host="0.0.0.0", port=8000)
