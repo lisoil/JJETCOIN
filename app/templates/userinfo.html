@@ -306,10 +306,16 @@
                 messageElement.innerText = 'Account already exists!';
                 messageElement.className = 'message error-message';
             } else {
-                userData[username] = { balance: 1000, JJETTCOIN: 0 }; // Initialize account with 1000 USD and 0 JJETTCOIN
+                userData[username] = { 
+                    balance: 1000, 
+                    JJETTCOIN: 0,
+                    transactions: [], // Add transactions array to track history
+                    initialBalance: 1000 // Store initial balance for profit calculation
+                };
                 sessionStorage.setItem('userData', JSON.stringify(userData));
                 messageElement.innerText = `Account created for ${username} with 1000 USD!`;
                 messageElement.className = 'message success-message';
+                updateStats(username);
             }
         });
 
@@ -325,6 +331,7 @@
                 messageElement.innerText = `Welcome back, ${username}!`;
                 messageElement.className = 'message success-message';
                 updateUserTracker();
+                updateStats(username);
             } else {
                 messageElement.innerText = 'Account not found!';
                 messageElement.className = 'message error-message';
@@ -348,6 +355,44 @@
             }
         }
 
+        // Calculate and update statistics
+        function updateStats(username) {
+            const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+            const user = userData[username];
+            
+            if (!user || !user.transactions) return;
+
+            let totalWinnings = 0;
+            let totalLosses = 0;
+            let weeklyWinnings = [0, 0, 0, 0]; // Last 4 weeks
+            let weeklyLosses = [0, 0, 0, 0];   // Last 4 weeks
+
+            // Calculate totals and weekly breakdowns
+            user.transactions.forEach(transaction => {
+                const amount = transaction.amount;
+                const timestamp = new Date(transaction.timestamp);
+                const weekIndex = Math.min(3, Math.floor((Date.now() - timestamp) / (7 * 24 * 60 * 60 * 1000)));
+
+                if (amount > 0) {
+                    totalWinnings += amount;
+                    weeklyWinnings[weekIndex] += amount;
+                } else {
+                    totalLosses += Math.abs(amount);
+                    weeklyLosses[weekIndex] += Math.abs(amount);
+                }
+            });
+
+            // Update the display
+            document.getElementById('total-winnings').innerText = `$${totalWinnings.toFixed(2)}`;
+            document.getElementById('total-losses').innerText = `$${totalLosses.toFixed(2)}`;
+            document.getElementById('net-profit').innerText = `$${(totalWinnings - totalLosses).toFixed(2)}`;
+
+            // Update the chart
+            chart.data.datasets[0].data = weeklyWinnings;
+            chart.data.datasets[1].data = weeklyLosses;
+            chart.update();
+        }
+
         // Chart.js for winnings and losses
         const ctxWinnings = document.getElementById('winnings-losses-chart').getContext('2d');
         const chart = new Chart(ctxWinnings, {
@@ -356,13 +401,13 @@
                 labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
                 datasets: [{
                     label: 'Winnings',
-                    data: [10, 20, 15, 30],
+                    data: [0, 0, 0, 0],
                     borderColor: 'green',
                     fill: false,
                     tension: 0.4
                 }, {
                     label: 'Losses',
-                    data: [5, 10, 8, 12],
+                    data: [0, 0, 0, 0],
                     borderColor: 'red',
                     fill: false,
                     tension: 0.4
@@ -400,8 +445,12 @@
             }
         });
 
-        // Update tracker when page loads
+        // Update tracker and stats when page loads
         updateUserTracker();
+        const currentUser = sessionStorage.getItem('currentUser');
+        if (currentUser) {
+            updateStats(currentUser);
+        }
     </script>
 </body>
 </html> 

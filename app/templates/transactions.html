@@ -320,6 +320,19 @@
             if (currentUser && userData[currentUser] && userData[currentUser].balance >= totalCost) {
                 userData[currentUser].JJETTCOIN += amount;
                 userData[currentUser].balance -= totalCost;
+                
+                // Record the transaction
+                if (!userData[currentUser].transactions) {
+                    userData[currentUser].transactions = [];
+                }
+                userData[currentUser].transactions.push({
+                    type: 'buy',
+                    amount: -totalCost,
+                    JJETTCOIN: amount,
+                    price: JJETTCOINValue,
+                    timestamp: new Date().toISOString()
+                });
+                
                 sessionStorage.setItem('userData', JSON.stringify(userData));
                 document.getElementById('transaction-message').innerText = `Bought ${amount} JJETTCOIN for ${totalCost.toFixed(2)} USD!`;
                 updateUserTracker();
@@ -339,6 +352,19 @@
             if (currentUser && userData[currentUser] && userData[currentUser].JJETTCOIN >= amount) {
                 userData[currentUser].JJETTCOIN -= amount;
                 userData[currentUser].balance += totalRevenue;
+                
+                // Record the transaction
+                if (!userData[currentUser].transactions) {
+                    userData[currentUser].transactions = [];
+                }
+                userData[currentUser].transactions.push({
+                    type: 'sell',
+                    amount: totalRevenue,
+                    JJETTCOIN: -amount,
+                    price: JJETTCOINValue,
+                    timestamp: new Date().toISOString()
+                });
+                
                 sessionStorage.setItem('userData', JSON.stringify(userData));
                 document.getElementById('transaction-message').innerText = `Sold ${amount} JJETTCOIN for ${totalRevenue.toFixed(2)} USD!`;
                 updateUserTracker();
