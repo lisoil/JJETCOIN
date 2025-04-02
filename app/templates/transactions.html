@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJETTCOIN - Transactions</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .nav-bar {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-bar a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-bar a.active {
+            background-color: #007BFF;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .main-content {
+            margin-top: 80px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 10px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            flex: 1 1 250px;
+            min-width: 250px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .section h2 {
+            color: #fff;
+            margin-top: 0;
+            font-size: 20px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+            gap: 8px;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+        }
+
+        input[type="number"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        button {
+            padding: 8px 20px;
+            background: linear-gradient(45deg, #007BFF, #00b4db);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #0056b3, #0088cc);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        #user-tracker {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        #user-tracker p {
+            margin: 5px 0;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        #user-tracker span {
+            font-weight: 600;
+            color: #007BFF;
+        }
+
+        .value-display {
+            font-size: 20px;
+            font-weight: 600;
+            color: #007BFF;
+            text-align: center;
+            margin: 10px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        #transaction-message {
+            font-size: 13px;
+            margin-top: 5px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-bar">
+        <a href="{{ url_for('index')}}">Home</a>
+        <a href="{{ url_for('games')}}">Games</a>
+        <a href="{{ url_for('transactions')}}" class="active">Transactions</a>
+        <a href="{{ url_for('userinfo')}}">User Info</a>
+    </div>
+
+    <div id="user-tracker">
+        <p>Username: <span id="current-username">NA</span></p>
+        <p>Current USD: <span id="current-usd">0.00</span></p>
+        <p>Current JJETTCOIN: <span id="current-JJETTCOIN">0.00</span></p>
+    </div>
+
+    <div class="main-content">
+        <h1>JJETTCOIN Transactions</h1>
+
+        <div class="container">
+            <!-- JJETTCOIN Value Tracker -->
+            <div class="section" id="JJETTCOIN-tracker">
+                <h2>JJETTCOIN Value Tracker</h2>
+                <p class="value-display">Current Value: <span id="JJETTCOIN-value">0.00</span> USD</p>
+            </div>
+
+            <!-- JJETTCOIN Value Graph -->
+            <div class="section" id="JJETTCOIN-value-tracker">
+                <h2>JJETTCOIN Value Over Time</h2>
+                <canvas id="JJETTCOIN-value-chart"></canvas>
+            </div>
+
+            <!-- Buy/Sell JJETTCOIN Section -->
+            <div class="section" id="buy-sell-section">
+                <h2>Buy/Sell JJETTCOIN</h2>
+                <form id="buy-form">
+                    <input type="number" id="buy-amount" placeholder="Amount to Buy" required>
+                    <button type="submit">Buy JJETTCOIN</button>
+                </form>
+                <form id="sell-form">
+                    <input type="number" id="sell-amount" placeholder="Amount to Sell" required>
+                    <button type="submit">Sell JJETTCOIN</button>
+                </form>
+                <p id="transaction-message"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate JJETTCOIN value using random walk model
+        let JJETTCOINValue = 50; // Starting value
+        const JJETTCOINHistory = [];
+        const JJETTCOINLabels = [];
+        const maxHistoryLength = 10; // Keep the last 10 values for the graph
+        const volatility = 0.20; // 5% volatility
+        const drift = -0.01; // Slight upward drift
+
+        const ctx = document.getElementById('JJETTCOIN-value-chart').getContext('2d');
+        const JJETTCOINChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: JJETTCOINLabels,
+                datasets: [{
+                    label: 'JJETTCOIN Value (USD)',
+                    data: JJETTCOINHistory,
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#fff'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
+                    }
+                }
+            }
+        });
+
+        function updateJJETTCOINValue() {
+            // Calculate random change based on current value
+            const randomChange = (Math.random() - 0.5) * volatility * JJETTCOINValue;
+            const driftChange = drift * JJETTCOINValue;
+            JJETTCOINValue = Math.max(0.01, JJETTCOINValue + randomChange + driftChange);
+            
+            // Round to 2 decimal places
+            JJETTCOINValue = Math.round(JJETTCOINValue * 100) / 100;
+            
+            document.getElementById('JJETTCOIN-value').innerText = JJETTCOINValue.toFixed(2);
+
+            // Update the graph
+            JJETTCOINHistory.push(JJETTCOINValue);
+            JJETTCOINLabels.push(new Date().toLocaleTimeString());
+
+            // Keep only the last 'maxHistoryLength' values
+            if (JJETTCOINHistory.length > maxHistoryLength) {
+                JJETTCOINHistory.shift();
+                JJETTCOINLabels.shift();
+            }
+
+            JJETTCOINChart.update();
+        }
+
+        // Update every 5 seconds instead of 30 for more frequent changes
+        setInterval(updateJJETTCOINValue, 5000);
+        // Initial update
+        updateJJETTCOINValue();
+
+        // Handle buying JJETTCOIN
+        document.getElementById('buy-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const amount = parseFloat(document.getElementById('buy-amount').value);
+            const totalCost = Math.floor((amount * JJETTCOINValue) * 100) / 100;
+            const currentUser = sessionStorage.getItem('currentUser');
+            const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+            
+            if (currentUser && userData[currentUser] && userData[currentUser].balance >= totalCost) {
+                userData[currentUser].JJETTCOIN += amount;
+                userData[currentUser].balance -= totalCost;
+                sessionStorage.setItem('userData', JSON.stringify(userData));
+                document.getElementById('transaction-message').innerText = `Bought ${amount} JJETTCOIN for ${totalCost.toFixed(2)} USD!`;
+                updateUserTracker();
+            } else {
+                document.getElementById('transaction-message').innerText = 'Insufficient funds!';
+            }
+        });
+
+        // Handle selling JJETTCOIN
+        document.getElementById('sell-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const amount = parseFloat(document.getElementById('sell-amount').value);
+            const totalRevenue = Math.floor((amount * JJETTCOINValue) * 100) / 100;
+            const currentUser = sessionStorage.getItem('currentUser');
+            const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+            
+            if (currentUser && userData[currentUser] && userData[currentUser].JJETTCOIN >= amount) {
+                userData[currentUser].JJETTCOIN -= amount;
+                userData[currentUser].balance += totalRevenue;
+                sessionStorage.setItem('userData', JSON.stringify(userData));
+                document.getElementById('transaction-message').innerText = `Sold ${amount} JJETTCOIN for ${totalRevenue.toFixed(2)} USD!`;
+                updateUserTracker();
+            } else {
+                document.getElementById('transaction-message').innerText = 'Insufficient JJETTCOIN!';
+            }
+        });
+
+        // Update user tracker display
+        function updateUserTracker() {
+            const currentUser = sessionStorage.getItem('currentUser');
+            if (currentUser) {
+                const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+                const user = userData[currentUser] || { balance: 0, JJETTCOIN: 0 };
+                
+                document.getElementById('current-username').innerText = currentUser;
+                document.getElementById('current-usd').innerText = user.balance.toFixed(2);
+                document.getElementById('current-JJETTCOIN').innerText = user.JJETTCOIN.toFixed(2);
+            } else {
+                document.getElementById('current-username').innerText = 'NA';
+                document.getElementById('current-usd').innerText = '0.00';
+                document.getElementById('current-JJETTCOIN').innerText = '0.00';
+            }
+        }
+
+        // Update tracker when page loads
+        updateUserTracker();
+    </script>
+</body>
+</html> 
