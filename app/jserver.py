@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request
 from waitress import serve
-from exchange import get_exchange_rates
+from __init__ import create_app
+# from exchange import get_exchange_rates
 
-app = Flask(__name__)
+app = create_app()
 
 @app.route('/')
 @app.route('/index')
@@ -17,16 +18,16 @@ def userinfo():
 def games():
     return render_template('games.html')
 
-@app.route('/exchange')
-def exchange():
+# @app.route('/exchange')
+# def exchange():
 
-    currency_data = get_exchange_rates()
+#     currency_data = get_exchange_rates()
 
-    return render_template(
-        'exchange.html',
-        currency="USD",
-        rate=currency_data['usd']['usd']
-    )
+#     return render_template(
+#         'exchange.html',
+#         currency="USD",
+#         rate=currency_data['usd']['usd']
+#     )
 
     # return str(currency_data)
 
