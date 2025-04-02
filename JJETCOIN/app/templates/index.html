@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}JJETTCOIN - Home{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<div id="user-tracker">
+    <p>Username: <span id="current-username">NA</span></p>
+    <p>Current USD: <span id="current-usd">0.00</span></p>
+    <p>Current JJETTCOIN: <span id="current-JJETTCOIN">0.00</span></p>
+</div>
+
+<div class="main-content">
+    <div class="logo">JJETTCOIN</div>
+    <div class="motto">Soaring High, Leaving Taxes Behind!</div>
+    <div class="sub-motto">The sky is not the limit.</div>
+
+    <div class="description">
+        <p>JETCOIN is the premier digital currency for those who value freedom above all else. Built on a foundation of discretion and innovation, JJETTCOIN enables users to navigate their financial journey without the constraints of traditional systems. With its cutting-edge blockchain technology and seamless cross-border transactions, JJETTCOIN empowers you to take control of your wealth, leaving unnecessary obstacles—like taxes—far below the clouds.</p>
+        <p>Join the movement that's redefining financial independence. With JJETTCOIN, your assets aren't just secure—they're untouchable. Fly higher, live freer, and make every coin count.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}

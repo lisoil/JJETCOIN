@@ -1,0 +1,184 @@
+/* Transactions page specific styles */
+.transactions-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    height: calc(100vh - 60px); /* Subtract navbar height */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 8px;
+}
+
+.transactions-header {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.transactions-header h1 {
+    font-size: 1.8em;
+    color: #fff;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Value Tracker Section */
+#JJETTCOIN-tracker {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 8px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+    height: fit-content;
+}
+
+#JJETTCOIN-tracker:hover {
+    transform: translateY(-5px);
+}
+
+#JJETTCOIN-tracker h2 {
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 3px;
+}
+
+.value-display {
+    font-size: 1.1em;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+/* Value Graph Section */
+#JJETTCOIN-value-tracker {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 8px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#JJETTCOIN-value-tracker h2 {
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 3px;
+    text-align: center;
+}
+
+.chart-container {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    height: calc(100% - 30px); /* Subtract header height */
+}
+
+/* Buy/Sell Section */
+#buy-sell-section {
+    grid-column: 1 / -1;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 8px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+#buy-sell-section h2 {
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.transaction-forms {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.transaction-form {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-form h3 {
+    color: #fff;
+    font-size: 1em;
+    margin-bottom: 3px;
+    text-align: center;
+}
+
+.transaction-form input {
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 0.9em;
+}
+
+.transaction-form input:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+.transaction-form button {
+    width: 100%;
+    padding: 4px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(45deg, #007BFF, #00b4db);
+    color: white;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.transaction-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+#buy-form button {
+    background: linear-gradient(45deg, #28a745, #20c997);
+}
+
+#sell-form button {
+    background: linear-gradient(45deg, #dc3545, #ff4d5b);
+}
+
+#transaction-message {
+    text-align: center;
+    padding: 4px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    margin-top: 4px;
+}
+
+.success-message {
+    background: rgba(40, 167, 69, 0.2);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+    color: #28a745;
+}
+
+.error-message {
+    background: rgba(220, 53, 69, 0.2);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #dc3545;
+} 

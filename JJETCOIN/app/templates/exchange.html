@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Exchange JJETTCOIN{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/exchange.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="exchange-container">
+    <h1>Exchange JJETTCOIN</h1>
+    
+    <div class="rate-display" id="rateDisplay">
+        <p>Current Rate: <span>1 JJETTCOIN = $0.0001</span></p>
+    </div>
+
+    <form id="exchangeForm" class="exchange-form">
+        <input type="number" id="amount" placeholder="Enter amount of JJETTCOIN to exchange" required>
+        <button type="submit">Exchange JJETTCOIN</button>
+    </form>
+
+    <div id="message" class="exchange-message"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/exchange.js') }}"></script>
+{% endblock %}
