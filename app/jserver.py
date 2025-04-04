@@ -3,7 +3,7 @@ from waitress import serve
 from __init__ import create_app
 # from exchange import get_exchange_rates
 
-app = create_app()
+app = Flask(__name__)
 
 @app.route('/')
 @app.route('/index')
@@ -17,6 +17,10 @@ def userinfo():
 @app.route('/games/')
 def games():
     return render_template('games.html')
+
+@app.route('/transactions')
+def transactions():
+    return render_template('transactions.html')
 
 # @app.route('/exchange')
 # def exchange():
