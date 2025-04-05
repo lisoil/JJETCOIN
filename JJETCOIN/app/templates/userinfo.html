@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}JJETTCOIN - User Information{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/userinfo.css') }}">
+{% endblock %}
+
+{% block content %}
+<div id="user-tracker">
+    <p>Username: <span id="current-username">NA</span></p>
+    <p>Current USD: <span id="current-usd">0.00</span></p>
+    <p>Current JJETTCOIN: <span id="current-JJETTCOIN">0.00</span></p>
+</div>
+
+<div class="main-content">
+    <h1>User Information</h1>
+
+    <div class="section">
+        <h2>Account Management</h2>
+        <div class="account-section">
+            <div class="account-form">
+                <h3>Create Account</h3>
+                <form id="create-account-form">
+                    <input type="text" id="username" placeholder="Username" required>
+                    <button type="submit">Create Account</button>
+                </form>
+                <p id="account-message" class="message"></p>
+            </div>
+            <div class="account-form">
+                <h3>Sign In</h3>
+                <form id="sign-in-form">
+                    <input type="text" id="sign-in-username" placeholder="Username" required>
+                    <button type="submit">Sign In</button>
+                </form>
+                <p id="sign-in-message" class="message"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Performance Overview</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Winnings</h3>
+                <p id="total-winnings">$0.00</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Losses</h3>
+                <p id="total-losses">$0.00</p>
+            </div>
+            <div class="stat-card">
+                <h3>Net Profit</h3>
+                <p id="net-profit">$0.00</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Winnings and Losses History</h2>
+        <div class="chart-container">
+            <canvas id="winnings-losses-chart"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/userinfo.js') }}"></script>
+{% endblock %} 

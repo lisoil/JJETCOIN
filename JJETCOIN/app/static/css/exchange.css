@@ -1,0 +1,95 @@
+/* Exchange page specific styles */
+.exchange-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    width: 100%;
+    max-width: 800px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 20px auto;
+}
+
+.exchange-container h1 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.rate-display {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.rate-display p {
+    color: #fff;
+    font-size: 24px;
+    margin: 0;
+}
+
+.rate-display span {
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.exchange-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.exchange-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 16px;
+}
+
+.exchange-form button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #007BFF, #00b4db);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.exchange-form button:hover {
+    background: linear-gradient(45deg, #0056b3, #0088cc);
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+.exchange-message {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.success-message {
+    background: rgba(40, 167, 69, 0.2);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+    color: #fff;
+}
+
+.error-message {
+    background: rgba(220, 53, 69, 0.2);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #fff;
+} 
