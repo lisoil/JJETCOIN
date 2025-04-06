@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request
 from waitress import serve
-from __init__ import create_app
+from . import create_app
 # from exchange import get_exchange_rates
 
-app = Flask(__name__)
+app = create_app()
+# app = Flask(__name__)
 
 @app.route('/')
 @app.route('/index')
