@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request
 from waitress import serve
-from . import create_app
+# from . import create_app
 # from exchange import get_exchange_rates
 
-app = create_app()
-# app = Flask(__name__)
+# app = create_app()
+app = Flask(__name__)
 
 @app.route('/')
 @app.route('/index')
@@ -22,6 +22,10 @@ def games():
 @app.route('/transactions')
 def transactions():
     return render_template('transactions.html')
+
+@app.route('/games/blackjack')
+def blackjack():
+    return render_template('blackjack.html')
 
 # @app.route('/exchange')
 # def exchange():

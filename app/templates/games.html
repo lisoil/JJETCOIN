@@ -202,9 +202,12 @@
             <!-- Game 2 -->
             <div class="game-card">
                 <div class="game-icon">🎲</div>
-                <h3>NFT Gacha</h3>
-                <p>WIN NFT NOW. GET RIC NOW</p>
-                <button class="play-button" onclick="playGacha()">Play Now</button>
+                <h3>Blackjack</h3>
+                <p>WIN COINS NOW. GET RIC NOW</p>
+                <form action="{{ url_for('blackjack') }}">
+                    <button class="play-button" type="submit">Play Now</button>
+                </form>
+                
             </div>
         </div>
     </div>
