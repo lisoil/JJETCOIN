@@ -248,23 +248,33 @@
 
         <div class="section">
             <h2>Account Management</h2>
+            
             <div class="account-section">
+                {% if user.is_authenticated %}
+                <div>
+                    <h3>User Logged in</h3>
+                    <form action="{{ url_for('auth.logout')}}">
+                        <button type="submit">Log out</button>
+                    </form>
+                </div>
+                {% else %}
                 <div class="account-form">
                     <h3>Create Account</h3>
-                    <form id="create-account-form">
-                        <input type="text" id="username" placeholder="Username" required>
+                    <form action="{{ url_for('signup')}}">
+                        <!-- <input type="text" id="username" placeholder="Username" required> -->
                         <button type="submit">Create Account</button>
                     </form>
                     <p id="account-message" class="message"></p>
                 </div>
                 <div class="account-form">
                     <h3>Sign In</h3>
-                    <form id="sign-in-form">
-                        <input type="text" id="sign-in-username" placeholder="Username" required>
+                    <form action="{{ url_for('login')}}">
+                        <!-- <input type="text" id="sign-in-username" placeholder="Username" required> -->
                         <button type="submit">Sign In</button>
                     </form>
                     <p id="sign-in-message" class="message"></p>
                 </div>
+                {% endif %}
             </div>
         </div>
 

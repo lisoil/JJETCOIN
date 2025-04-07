@@ -97,10 +97,10 @@ function stay() {
 
     let message = "";
     if (yourSum > 21) {
-        message = "You Lose! -200 coins";
+        message = "Bust! -200 coins";
     }
     else if (dealerSum > 21) {
-        message = "You win! +200 coins";
+        message = "Dealer bust, you win! +200 coins";
     }
     //both you and dealer <= 21
     else if (yourSum == dealerSum) {

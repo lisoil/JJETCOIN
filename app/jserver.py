@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 from waitress import serve
+from flask_login import login_required, current_user
+
 # from . import create_app
 # from exchange import get_exchange_rates
 
@@ -26,6 +28,15 @@ def transactions():
 @app.route('/games/blackjack')
 def blackjack():
     return render_template('blackjack.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html', user=current_user)
+
+@app.route('/signup')
+def signup():
+    return render_template('sign_up.html', user=current_user)
+
 
 # @app.route('/exchange')
 # def exchange():
