@@ -1,5 +1,13 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
     text-align: center;
 }
 
@@ -15,14 +23,47 @@ body {
     margin: 1px;
 }
 
-#hit {
-    width: 100px;
-    height: 50px;
-    font-size: 20px;
+#hit, #stay, .action-button {
+    background: linear-gradient(45deg, #007BFF, #00b4db);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-#stay {
+#hit:hover, #stay:hover, .action-button:hover {
+    background: linear-gradient(45deg, #0056b3, #0088cc);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+#hit, #stay {
     width: 100px;
     height: 50px;
-    font-size: 20px;
+    margin: 4px;
 }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+}
+
+.action-button {
+    width: 80px;
+    height: 35px;
+    font-size: 12px;
+    text-align: center;
+    margin: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

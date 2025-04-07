@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Black Jack</title>
+        <title>Blackjack</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/blackjack.css') }}">
         <script src="{{ url_for('static', filename='blackjack.js') }}"></script>
     </head>
@@ -19,8 +19,19 @@
         <div id="your-cards"></div>
 
         <br>
-        <button id="hit">Hit</button>
-        <button id="stay">Stay</button>
+        <div class="button-container">
+            <button id="hit" class="action-button">Hit</button>
+            <button id="stay" class="action-button">Stay</button>
+        </div>
+        
         <p id="results"></p>
+
+        <div class="button-container">  
+            <form action="{{ url_for('games')}}">
+              <button class="action-button" type="submit">Back</button>
+            </form>
+            <button class="action-button" onclick="window.location.reload();">Reset</button>
+        </div>          
+
     </body>
 </html>
