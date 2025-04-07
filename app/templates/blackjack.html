@@ -9,29 +9,30 @@
     </head>
 
     <body>
-        <h2>Dealer: <span id="dealer-sum"></span></h2>
-        <div id="dealer-cards">
-            <!-- <img id="hidden" src="../static/cards/BACK.png"> -->
-            <img id="hidden" src="{{ url_for('static', filename='./cards/BACK.png') }}">
+        <div class="container">
+            <h2>Dealer: <span id="dealer-sum"></span></h2>
+            <div id="dealer-cards">
+                <!-- <img id="hidden" src="../static/cards/BACK.png"> -->
+                <img id="hidden" src="{{ url_for('static', filename='./cards/BACK.png') }}">
+            </div>
+
+            <h2>You: <span id="your-sum"></span></h2>
+            <div id="your-cards"></div>
+
+            <br>
+            <div class="button-container">
+                <button id="hit" class="action-button">Hit</button>
+                <button id="stay" class="action-button">Stay</button>
+            </div>
+            
+            <p id="results"></p>
+
+            <div class="button-container">  
+                <form action="{{ url_for('games')}}">
+                <button class="action-button" type="submit">Back</button>
+                </form>
+                <button class="action-button" onclick="window.location.reload();">Reset</button>
+            </div>          
         </div>
-
-        <h2>You: <span id="your-sum"></span></h2>
-        <div id="your-cards"></div>
-
-        <br>
-        <div class="button-container">
-            <button id="hit" class="action-button">Hit</button>
-            <button id="stay" class="action-button">Stay</button>
-        </div>
-        
-        <p id="results"></p>
-
-        <div class="button-container">  
-            <form action="{{ url_for('games')}}">
-              <button class="action-button" type="submit">Back</button>
-            </form>
-            <button class="action-button" onclick="window.location.reload();">Reset</button>
-        </div>          
-
     </body>
 </html>
