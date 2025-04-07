@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content%}
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div class="slot-window">
+	<div class="slots">
+		<div class="reel"></div>
+		<div class="reel"></div>
+		<div class="reel"></div>
+	</div>
+	<div id="debug" class="debug"></div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+
+<body>
+	<button class="btn" id="spinButton">Spin X 1</button>
+</body>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+{% endblock %}
