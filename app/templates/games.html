@@ -205,7 +205,7 @@
                 <h3>Blackjack</h3>
                 <p>WIN COINS NOW. GET RIC NOW</p>
                 <form action="{{ url_for('blackjack') }}">
-                    <button class="play-button" type="submit">Play Now</button>
+                    <button class="play-button" type="submit" onclick="playBlackjack()">Play Now</button>
                 </form>
                 
             </div>
@@ -216,6 +216,10 @@
         // Game functions (to be implemented)
         function playGacha() {
             alert('Gacha game coming soon!');
+        }
+
+        function playBlackjack() {
+            alert('-160 coins');
         }
 
         // Update user tracker display

@@ -97,20 +97,20 @@ function stay() {
 
     let message = "";
     if (yourSum > 21) {
-        message = "You Lose!";
+        message = "You Lose! -200 coins";
     }
     else if (dealerSum > 21) {
-        message = "You win!";
+        message = "You win! +200 coins";
     }
     //both you and dealer <= 21
     else if (yourSum == dealerSum) {
         message = "Tie!";
     }
     else if (yourSum > dealerSum) {
-        message = "You Win!";
+        message = "You Win! +200 coins";
     }
     else if (yourSum < dealerSum) {
-        message = "You Lose!";
+        message = "You Lose! -200 coins";
     }
 
     document.getElementById("dealer-sum").innerText = dealerSum;
