@@ -200,7 +200,9 @@
                 <div class="game-icon">🎮</div>
                 <h3>NFT Gacha</h3>
                 <p>WIN NFT NOW. GET RIC NOW</p>
-                <button class="play-button" onclick="playGacha()">Play Now</button>
+                <form action="{{ url_for('gacha')}}">
+                    <button class="play-button" onclick="playGacha()">Play Now</button>
+                </form>
             </div>
 
             <!-- Game 2 -->
@@ -219,7 +221,7 @@
     <script>
         // Game functions (to be implemented)
         function playGacha() {
-            alert('Gacha game coming soon!');
+            alert('-160 coins');
         }
 
         function playBlackjack() {

@@ -20,6 +20,15 @@ body {
   display: block;
 }
 
+.main-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
+
+
 .slot-window {
   position: absolute;
   top: 50%;
@@ -131,6 +140,7 @@ body {
   color: red;
   font-weight: 700;
 }
+
 
 .btn {
   padding: 15px 40px;

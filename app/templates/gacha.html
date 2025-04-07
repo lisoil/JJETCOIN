@@ -121,6 +121,9 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       }
     </style>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/gacha.css') }}">
+    <script src="{{ url_for('static', filename='gacha.js') }}"></script>
   </head>
   <body>
     <div class="nav-bar">
@@ -141,7 +144,7 @@
     </div>
 
     <div class="main-content">
-        <link rel="stylesheet" href="{{ url_for('static', filename='gacha.css') }}">
+        
         <div class="slot-window">
             <div class="slots">
                 <div class="reel"></div>
@@ -153,7 +156,7 @@
         <body>
             <button class="btn" id="spinButton">Spin X 1</button>
         </body>
-        <script src="{{ url_for('static', filename='gacha.js') }}"></script>
+  
     </div>
   </body>
 </html>

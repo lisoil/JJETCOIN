@@ -65,7 +65,7 @@ function rollAll() {
 	const outcome = generateOutcome();
 	const targets = outcome.indexes;
 	
-	debugEl.textContent = 'rolling...';
+	debugEl.textContent = '-160 coins rolling...';
 	
 	return Promise
 		.all( [...reelsList].map((reel, i) => roll(reel, i, targets ? targets[i] : null)) )	
@@ -83,7 +83,7 @@ function rollAll() {
 
 // Checks if button is clicked
 document.getElementById("spinButton").addEventListener("click", () => {
-	if (document.querySelector(".slots").classList.contains("spinning")) return;
+	if (document.querySelector(".slots").classList.contains("spinning")) return;	
 
 	document.querySelector(".slots").classList.add("spinning");
 

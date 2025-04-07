@@ -33,7 +33,7 @@ def blackjack():
 
 @app.route('/games/gacha')
 def gacha():
-    return render_template('gacha.html', user = current_user)
+    return render_template('gacha.html', user=current_user)
 
 @app.route('/login')
 def login():
