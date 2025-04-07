@@ -1,30 +1,31 @@
 from flask import Flask, render_template, request
 from waitress import serve
 from app import create_app
+from app.auth import get_username
 from flask_login import login_required, current_user
 
 
-print("\n***In progress - signup does not work***\n")
-print("***Run jserver.py instead***\n")
+print("\n***In progress - working on username***\n")
 
 app = create_app()
+username = get_username()
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', user=current_user, username=username)
 
 @app.route('/userinfo')
 def userinfo():
-    return render_template('userinfo.html', user=current_user)
+    return render_template('userinfo.html', user=current_user, username=username)
 
 @app.route('/games/')
 def games():
-    return render_template('games.html')
+    return render_template('games.html', user=current_user, username=username)
 
 @app.route('/transactions')
 def transactions():
-    return render_template('transactions.html')
+    return render_template('transactions.html', user=current_user, username=username)
 
 @app.route('/games/blackjack')
 def blackjack():

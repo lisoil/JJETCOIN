@@ -238,7 +238,11 @@
     </div>
 
     <div id="user-tracker">
-        <p>Username: <span id="current-username">NA</span></p>
+        {% if user.is_authenticated %}
+        <p>Username: <span>{{username}}</span></p>
+        {% else %}
+        <p>Username: <span>Not logged in</span></p>
+        {% endif %}
         <p>Current USD: <span id="current-usd">0.00</span></p>
         <p>Current JJETTCOIN: <span id="current-JJETTCOIN">0.00</span></p>
     </div>
@@ -251,16 +255,22 @@
             
             <div class="account-section">
                 {% if user.is_authenticated %}
-                <div>
+                <div class="account-form">
                     <h3>User Logged in</h3>
                     <form action="{{ url_for('auth.logout')}}">
                         <button type="submit">Log out</button>
                     </form>
                 </div>
+                <div class="account-form">
+                    <h3>Edit Profile</h3>
+                    <form>
+                        <button type="submit" onclick="editProfile()">Edit profile</button>
+                    </form>
+                </div>
                 {% else %}
                 <div class="account-form">
                     <h3>Create Account</h3>
-                    <form action="{{ url_for('signup')}}">
+                    <form action="{{ url_for('auth.sign_up')}}">
                         <!-- <input type="text" id="username" placeholder="Username" required> -->
                         <button type="submit">Create Account</button>
                     </form>
@@ -305,65 +315,70 @@
     </div>
 
     <script>
-        // Handle account creation
-        document.getElementById('create-account-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
-            const messageElement = document.getElementById('account-message');
-            
-            if (userData[username]) {
-                messageElement.innerText = 'Account already exists!';
-                messageElement.className = 'message error-message';
-            } else {
-                userData[username] = { 
-                    balance: 1000, 
-                    JJETTCOIN: 0,
-                    transactions: [], // Add transactions array to track history
-                    initialBalance: 1000 // Store initial balance for profit calculation
-                };
-                sessionStorage.setItem('userData', JSON.stringify(userData));
-                messageElement.innerText = `Account created for ${username} with 1000 USD!`;
-                messageElement.className = 'message success-message';
-                updateStats(username);
-            }
-        });
 
-        // Handle sign-in
-        document.getElementById('sign-in-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('sign-in-username').value;
-            const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
-            const messageElement = document.getElementById('sign-in-message');
-            
-            if (userData[username]) {
-                sessionStorage.setItem('currentUser', username);
-                messageElement.innerText = `Welcome back, ${username}!`;
-                messageElement.className = 'message success-message';
-                updateUserTracker();
-                updateStats(username);
-            } else {
-                messageElement.innerText = 'Account not found!';
-                messageElement.className = 'message error-message';
-            }
-        });
-
-        // Update user tracker display
-        function updateUserTracker() {
-            const currentUser = sessionStorage.getItem('currentUser');
-            if (currentUser) {
-                const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
-                const user = userData[currentUser] || { balance: 0, JJETTCOIN: 0 };
-                
-                document.getElementById('current-username').innerText = currentUser;
-                document.getElementById('current-usd').innerText = user.balance.toFixed(2);
-                document.getElementById('current-JJETTCOIN').innerText = user.JJETTCOIN.toFixed(2);
-            } else {
-                document.getElementById('current-username').innerText = 'NA';
-                document.getElementById('current-usd').innerText = '0.00';
-                document.getElementById('current-JJETTCOIN').innerText = '0.00';
-            }
+        function editProfile() {
+            alert("Sorry this doesn't work  yet, and it probably will never work. Too bad.");
         }
+
+        // // Handle account creation
+        // document.getElementById('create-account-form').addEventListener('submit', function(event) {
+        //     event.preventDefault();
+        //     const username = document.getElementById('username').value;
+        //     const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+        //     const messageElement = document.getElementById('account-message');
+            
+        //     if (userData[username]) {
+        //         messageElement.innerText = 'Account already exists!';
+        //         messageElement.className = 'message error-message';
+        //     } else {
+        //         userData[username] = { 
+        //             balance: 1000, 
+        //             JJETTCOIN: 0,
+        //             transactions: [], // Add transactions array to track history
+        //             initialBalance: 1000 // Store initial balance for profit calculation
+        //         };
+        //         sessionStorage.setItem('userData', JSON.stringify(userData));
+        //         messageElement.innerText = `Account created for ${username} with 1000 USD!`;
+        //         messageElement.className = 'message success-message';
+        //         updateStats(username);
+        //     }
+        // });
+
+        // // Handle sign-in
+        // document.getElementById('sign-in-form').addEventListener('submit', function(event) {
+        //     event.preventDefault();
+        //     const username = document.getElementById('sign-in-username').value;
+        //     const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+        //     const messageElement = document.getElementById('sign-in-message');
+            
+        //     if (userData[username]) {
+        //         sessionStorage.setItem('currentUser', username);
+        //         messageElement.innerText = `Welcome back, ${username}!`;
+        //         messageElement.className = 'message success-message';
+        //         updateUserTracker();
+        //         updateStats(username);
+        //     } else {
+        //         messageElement.innerText = 'Account not found!';
+        //         messageElement.className = 'message error-message';
+        //     }
+        // });
+
+        // // Update user tracker display
+        // function updateUserTracker() {
+        //     const currentUser = sessionStorage.getItem('currentUser');
+        //     if (currentUser) {
+        //         const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+        //         const user = userData[currentUser] || { balance: 0, JJETTCOIN: 0 };
+                
+        //         document.getElementById('current-username').innerText = currentUser;
+        //         document.getElementById('current-usd').innerText = user.balance.toFixed(2);
+        //         document.getElementById('current-JJETTCOIN').innerText = user.JJETTCOIN.toFixed(2);
+        //     } else {
+        //         document.getElementById('current-username').innerText = 'NA';
+        //         document.getElementById('current-usd').innerText = '0.00';
+        //         document.getElementById('current-JJETTCOIN').innerText = '0.00';
+        //     }
+        // }
 
         // Calculate and update statistics
         function updateStats(username) {
@@ -455,12 +470,12 @@
             }
         });
 
-        // Update tracker and stats when page loads
-        updateUserTracker();
-        const currentUser = sessionStorage.getItem('currentUser');
-        if (currentUser) {
-            updateStats(currentUser);
-        }
+        // // Update tracker and stats when page loads
+        // updateUserTracker();
+        // const currentUser = sessionStorage.getItem('currentUser');
+        // if (currentUser) {
+        //     updateStats(currentUser);
+        // }
     </script>
 </body>
 </html> 

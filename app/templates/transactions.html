@@ -188,7 +188,11 @@
     </div>
 
     <div id="user-tracker">
-        <p>Username: <span id="current-username">NA</span></p>
+        {% if user.is_authenticated %}
+        <p>Username: <span>{{username}}</span></p>
+        {% else %}
+        <p>Username: <span>Not logged in</span></p>
+        {% endif %}
         <p>Current USD: <span id="current-usd">0.00</span></p>
         <p>Current JJETTCOIN: <span id="current-JJETTCOIN">0.00</span></p>
     </div>
@@ -373,25 +377,25 @@
             }
         });
 
-        // Update user tracker display
-        function updateUserTracker() {
-            const currentUser = sessionStorage.getItem('currentUser');
-            if (currentUser) {
-                const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
-                const user = userData[currentUser] || { balance: 0, JJETTCOIN: 0 };
+        // // Update user tracker display
+        // function updateUserTracker() {
+        //     const currentUser = sessionStorage.getItem('currentUser');
+        //     if (currentUser) {
+        //         const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+        //         const user = userData[currentUser] || { balance: 0, JJETTCOIN: 0 };
                 
-                document.getElementById('current-username').innerText = currentUser;
-                document.getElementById('current-usd').innerText = user.balance.toFixed(2);
-                document.getElementById('current-JJETTCOIN').innerText = user.JJETTCOIN.toFixed(2);
-            } else {
-                document.getElementById('current-username').innerText = 'NA';
-                document.getElementById('current-usd').innerText = '0.00';
-                document.getElementById('current-JJETTCOIN').innerText = '0.00';
-            }
-        }
+        //         document.getElementById('current-username').innerText = currentUser;
+        //         document.getElementById('current-usd').innerText = user.balance.toFixed(2);
+        //         document.getElementById('current-JJETTCOIN').innerText = user.JJETTCOIN.toFixed(2);
+        //     } else {
+        //         document.getElementById('current-username').innerText = 'NA';
+        //         document.getElementById('current-usd').innerText = '0.00';
+        //         document.getElementById('current-JJETTCOIN').innerText = '0.00';
+        //     }
+        // }
 
-        // Update tracker when page loads
-        updateUserTracker();
+        // // Update tracker when page loads
+        // updateUserTracker();
     </script>
 </body>
 </html> 
