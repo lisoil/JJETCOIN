@@ -1,31 +1,29 @@
 from flask import Flask, render_template, request
 from waitress import serve
-from app import create_app
-from app.auth import get_username
 from flask_login import login_required, current_user
 
+# from . import create_app
+# from exchange import get_exchange_rates
 
-print("\n***In progress - working on username***\n")
-
-app = create_app()
-username = get_username()
+# app = create_app()
+app = Flask(__name__)
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html', user=current_user, username=username)
+    return render_template('index.html')
 
 @app.route('/userinfo')
 def userinfo():
-    return render_template('userinfo.html', user=current_user, username=username)
+    return render_template('userinfo.html')
 
 @app.route('/games/')
 def games():
-    return render_template('games.html', user=current_user, username=username)
+    return render_template('games.html')
 
 @app.route('/transactions')
 def transactions():
-    return render_template('transactions.html', user=current_user, username=username)
+    return render_template('transactions.html')
 
 @app.route('/games/blackjack')
 def blackjack():
@@ -33,7 +31,7 @@ def blackjack():
 
 @app.route('/games/gacha')
 def gacha():
-    return render_template('gacha.html', user = current_user)
+    return render_template('gacha.html', user=current_user)
 
 @app.route('/login')
 def login():
@@ -44,9 +42,22 @@ def signup():
     return render_template('sign_up.html', user=current_user)
 
 
+# @app.route('/exchange')
+# def exchange():
+
+#     currency_data = get_exchange_rates()
+
+#     return render_template(
+#         'exchange.html',
+#         currency="USD",
+#         rate=currency_data['usd']['usd']
+#     )
+
+    # return str(currency_data)
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    serve(app, host="0.0.0.0", port=8000)

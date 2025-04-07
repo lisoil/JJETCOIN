@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        color: #000000;
+      }
+
+      .nav-bar {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 15px;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+      }
+
+      .nav-bar a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .nav-bar a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .nav-bar a.active {
+        background-color: #007bff;
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+      }
+
+      .main-content {
+        margin-top: 120px;
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
+        transform: scale(1.2);
+        box-sizing: border-box;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 20px;
+      }
+
+      
+
+      #user-tracker {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
+
+      #user-tracker p {
+        margin: 5px 0;
+        color: #fff;
+        font-size: 14px;
+      }
+
+      #user-tracker span {
+        font-weight: 600;
+        color: #007bff;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 10px;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .main-content > p {
+        text-align: center;
+        color: #ccc;
+        font-size: 18px;
+        margin-bottom: 40px;
+      }
+
+      .game-icon {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+        color: #007bff;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav-bar">
+      <a href="{{ url_for('index')}}">Home</a>
+      <a href="{{ url_for('games')}}" class="active">Games</a>
+      <a href="{{ url_for('transactions')}}">Transactions</a>
+      <a href="{{ url_for('userinfo')}}">User Info</a>
+    </div>
+
+    <div id="user-tracker">
+      {% if user.is_authenticated %}
+      <p>Username: <span>{{username}}</span></p>
+      {% else %}
+      <p>Username: <span>Not logged in</span></p>
+      {% endif %}
+      <p>Current USD: <span id="current-usd">0.00</span></p>
+      <p>Current JJETTCOIN: <span id="current-JJETTCOIN">0.00</span></p>
+    </div>
+
+    <div class="main-content">
+        <link rel="stylesheet" href="{{ url_for('static', filename='gacha.css') }}">
+        <div class="slot-window">
+            <div class="slots">
+                <div class="reel"></div>
+                <div class="reel"></div>
+                <div class="reel"></div>
+            </div>
+            <div id="debug" class="debug"></div>
+        </div>
+        <body>
+            <button class="btn" id="spinButton">Spin X 1</button>
+        </body>
+        <script src="{{ url_for('static', filename='gacha.js') }}"></script>
+    </div>
+  </body>
+</html>
+
