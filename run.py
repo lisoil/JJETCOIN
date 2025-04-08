@@ -5,7 +5,7 @@ from app.auth import get_username
 from flask_login import login_required, current_user
 
 
-print("\n***In progress - working on username***\n")
+print("\n***Welcome to JJETCOIN, traveler.***\n")
 
 app = create_app()
 username = get_username()
