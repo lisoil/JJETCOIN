@@ -227,6 +227,13 @@
                 <p id="transaction-message"></p>
             </div>
         </div>
+
+        <!-- Free Money Section -->
+        <div class="section" id="free-money-section">
+            <h2>Need More Funds?</h2>
+            <button id="free-money-button" onclick="giveFreeMoney()">Get 1000 USD</button>
+            <p id="free-money-message" class="message"></p>
+        </div>
     </div>
 
     <script>
@@ -377,25 +384,79 @@
             }
         });
 
-        // // Update user tracker display
-        // function updateUserTracker() {
-        //     const currentUser = sessionStorage.getItem('currentUser');
-        //     if (currentUser) {
-        //         const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
-        //         const user = userData[currentUser] || { balance: 0, JJETTCOIN: 0 };
+        // Function to give free money
+        function giveFreeMoney() {
+            const currentUser = sessionStorage.getItem('currentUser');
+            const userData = JSON.parse(sessionStorage.getItem('userData')) || {};
+            
+            if (currentUser) {
+                if (!userData[currentUser]) {
+                    userData[currentUser] = { balance: 0, JJETTCOIN: 0, transactions: [] };
+                }
                 
-        //         document.getElementById('current-username').innerText = currentUser;
-        //         document.getElementById('current-usd').innerText = user.balance.toFixed(2);
-        //         document.getElementById('current-JJETTCOIN').innerText = user.JJETTCOIN.toFixed(2);
-        //     } else {
-        //         document.getElementById('current-username').innerText = 'NA';
-        //         document.getElementById('current-usd').innerText = '0.00';
-        //         document.getElementById('current-JJETTCOIN').innerText = '0.00';
-        //     }
-        // }
+                userData[currentUser].balance += 1000;
+                
+                // Record the transaction
+                if (!userData[currentUser].transactions) {
+                    userData[currentUser].transactions = [];
+                }
+                userData[currentUser].transactions.push({
+                    type: 'free_money',
+                    amount: 1000,
+                    JJETTCOIN: 0,
+                    price: 0,
+                    timestamp: new Date().toISOString()
+                });
+                
+                sessionStorage.setItem('userData', JSON.stringify(userData));
+                document.getElementById('free-money-message').innerText = 'You received 1000 USD!';
+                document.getElementById('free-money-message').className = 'message success-message';
+                updateUserTracker();
+            } else {
+                document.getElementById('free-money-message').innerText = 'Please log in to receive free money!';
+                document.getElementById('free-money-message').className = 'message error-message';
+            }
+        }
 
-        // // Update tracker when page loads
-        // updateUserTracker();
+        // Add styles for the free money section
+        const style = document.createElement('style');
+        style.textContent = `
+            #free-money-section {
+                text-align: center;
+                margin-top: 20px;
+            }
+            
+            #free-money-button {
+                padding: 12px 30px;
+                font-size: 16px;
+                background: linear-gradient(45deg, #28a745, #20c997);
+                margin: 10px 0;
+            }
+            
+            #free-money-button:hover {
+                background: linear-gradient(45deg, #218838, #17a2b8);
+            }
+            
+            .message {
+                font-size: 14px;
+                margin-top: 10px;
+                padding: 8px;
+                border-radius: 5px;
+            }
+            
+            .success-message {
+                background: rgba(40, 167, 69, 0.2);
+                border: 1px solid rgba(40, 167, 69, 0.3);
+                color: #28a745;
+            }
+            
+            .error-message {
+                background: rgba(220, 53, 69, 0.2);
+                border: 1px solid rgba(220, 53, 69, 0.3);
+                color: #dc3545;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html> 
